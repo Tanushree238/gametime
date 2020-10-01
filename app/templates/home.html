@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Happy Birthday Manit Sir!</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+	html,body { font-family: sans-serif;overflow-y: hidden; }
+	.main_block{
+		background-image: url('/static/images/cards_bg.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;	
+		height: 100vh;
+	}
+.container{
+	max-width: 80vw;
+	margin:auto;
+}
+.scene {
+  width: 10.6vw;
+  height: 27.5vh;
+  /*border: 1px solid #CCC;*/
+  perspective: 600px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center right;
+  transition: transform 1s;
+  border:none;
+  border-radius:5px;
+  margin: 2px;	
+}
+
+.card.is-flipped {
+  transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  backface-visibility: hidden;
+  border-radius:5px;
+}
+
+.card__face--front {
+  font-size: 40px;
+  color: #1a1a1a;
+}
+
+.card__face--back {
+  /*background-color: blue;*/
+  font-size: 13px;
+  transform: rotateY(180deg);
+}
+#toggle{
+	background-color: #022873;
+	color:#fafafa;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+}
+
+</style>
+<body>
+	<div class="main_block pt-5">
+		<div class="container mt-2">
+			<div class="d-flex flex-wrap justify-content-around h-100">
+				{% for question in questions %}
+					{% if question.id==10 %}
+						<div class="scene scene--card m-1" >
+							<div class="card" id="toggle_card">
+								<div class="card__face card__face--front p-5 d-flex flex-column align-items-center justify-content-center h-100" style="background-image: url('/static/images/front_{{question.id+1}}.png'); background-repeat: no-repeat;background-size: cover;">
+									<h1 id="counter"></h1>
+									<button id="toggle" class="btn">ROLL!</button>
+								</div>
+								<div class="card__face card__face--back" style="background-image: url('/static/images/back_{{question.id+1}}.jpg'); background-repeat: no-repeat;background-size: 100% 100%;">
+									<div class="p-0 d-flex flex-column justify-content-center align-items-center h-100 " style="background-color: rgba(0,0,0,0.4);height: 100%;">
+										<h5>Happy Birthday Sir!!</h5>🥳🥳🥳🥳🥳🥳
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					{% if question.id>=10 %}
+						<div class="scene scene--card m-1">
+							<div class="card" id="card_{{question.id}}">
+								<div class="card__face card__face--front p-5 d-flex align-items-center justify-content-center h-100" style="background-image: url('/static/images/front_{{question.id+2}}.png'); background-repeat: no-repeat;background-size: cover;">{{question.id+1}}</div>
+								<div class="card__face card__face--back" style="background-image: url('/static/images/back_{{question.id+2}}.jpg'); background-repeat: no-repeat;background-size: 100% 100%;">
+									<div class="p-0 d-flex justify-content-center align-items-center h-100 " style="background-color: rgba(0,0,0,0.4);height: 100%;">
+										{{question.statement}}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						<div class="scene scene--card m-1">
+							<div class="card h-100" id="card_{{question.id}}">
+								<div class="card__face card__face--front p-5 d-flex align-items-center justify-content-center h-100" style="background-image: url('/static/images/front_{{question.id+1}}.png'); background-repeat: no-repeat;background-size: cover;">{{question.id+1}}</div>
+								<div class="card__face card__face--back " style="background-image: url('/static/images/back_{{question.id+1}}.jpg'); background-repeat: no-repeat;background-size: 100% 100%;">
+									<div class="p-0 d-flex justify-content-center align-items-center h-100 " style="background-color: rgba(0,0,0,0.4);height: 100%;">
+										{{question.statement}}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>	
+	</div>
+</body>
+<script>
+	$(document).ready(function(){
+		var list=[];
+		for (var i = 1; i <=20; i++) {
+		   list.push(i);
+		}
+		list = list.sort(() => Math.random() - 0.5);
+		list = list.sort(() => Math.random() - 0.5);
+		list = list.sort(() => Math.random() - 0.5);
+		function animateValue(id, start, end, duration) {
+		    // assumes integer values for start and end
+		    
+		    var obj = document.getElementById(id);
+		    var range = end - start;
+		    // no timer shorter than 50ms (not really visible any way)
+		    var minTimer = 50;
+		    // calc step time to show all interediate values
+		    var stepTime = Math.abs(Math.floor(duration / range));
+		    
+		    // never go below minTimer
+		    stepTime = Math.max(stepTime, minTimer);
+		    
+		    // get current time and calculate desired end time
+		    var startTime = new Date().getTime();
+		    var endTime = startTime + duration;
+		    var timer;
+		  
+		    function run() {
+		        var now = new Date().getTime();
+		        var remaining = Math.max((endTime - now) / duration, 0);
+		        var value = Math.round(end - (remaining * range));
+		        obj.innerHTML = value;
+		        if (value == end) {
+		            clearInterval(timer);
+		            if ($("#card_"+(end-1)).hasClass("is-flipped")){
+						$("#card_"+(end-1)).removeClass("is-flipped");
+					} else{
+						$("#card_"+(end-1)).addClass("is-flipped");
+						if($(".card").length-1==$(".card.is-flipped").length){
+							$("#toggle_card").addClass("is-flipped");
+						}
+					}
+		        }
+		    }
+		    
+		    timer = setInterval(run, stepTime);
+		    run();
+		}
+
+
+
+		$("#toggle").on("click",function(){
+			var id=list.pop();
+			$("#counter").empty();
+			animateValue("counter", 26, id, 500);
+
+		});
+	});
+</script>
+</html>
