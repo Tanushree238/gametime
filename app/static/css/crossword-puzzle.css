@@ -11,7 +11,7 @@
 .letter-text {
 	font-family:helvetica;
 	font-weight:bold;
-	color:#A466EB;
+	color:#;
 }
 
 .list-text {
@@ -23,19 +23,21 @@
  }
 
 .blank-cell {
-	background-color:#004C8A;
-	border-color:#01B8A4;
+	/*background-color:#5095f3;*/
+	background-color: rgba(80,149,243,0.6);
+	border-color:#fff;
 }
 .filled-cell {
-	background-color:#01B8A4;
-	border-color:#004C8A;
+	/*background-color:#3ce7be;*/
+	background-color: rgba(60,231,190,0.6);
+	border-color:#fff;
 }
 
 .clickable {
 	text-align: left;
 	cursor:pointer;
-	font-size: 24px;
-	color:#ABABAB;
+	font-size: 20px;
+	color:#fafafa;
 }
 
 .linkable {
@@ -50,7 +52,7 @@
 	right: 0;
 	z-index: 10;
 	overflow: hidden;
-	color:#333333;
+	color:#fff;
 }
 
 .strikeout {
@@ -108,7 +110,8 @@
 	margin-top: -9em;
 	margin-left: -15em;
 	border: 1px solid #CCCCCC;
-	background-color: #F3F3F3;
+	background-color: #fafafa;
+	border-radius: 4px;
 }
 
 .short-margin {

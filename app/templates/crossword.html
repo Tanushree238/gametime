@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>Happy Birthday Manit Sir</title>
+	<title>Happy Birthday Singla  !!</title>
 	<meta http-equiv="content-type" content="text/css/javascript/php; charset=UTF-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -15,11 +15,13 @@
 </head>
 <style>
 	.main_block{
-		background-image: url('/static/images/bg3.jpg');
+		background-image: url('/static/images/19931.jpg');
 		background-repeat: no-repeat;
 		background-size: cover;	
 		height: 100vh;
 	}
+	.full_modal .modal-content{background: #fff; border: none;border-radius: 0;width: 100%}
+
 </style>
 
 <script type="text/javascript">
@@ -27,39 +29,44 @@
 	$(document).ready(function(event) {
 		var puzzlewords = [
 				// word, clue
-			['Tanushree', 'Tanushree.'],
-			['Chirag', 'Chirag.'],
-			['Shubham', 'Shubham.'],
-			['Ajay', 'Ajay.'],
-			['Kanchi', 'Kanchi.'],
-			['Chanchal', 'Chanchal.'],
-			['Chiranjeev', 'Chiranjeev.'],
-			['Lalit', 'Lalit.'],
-			['Ankit', 'Ankit.'],
-			['Retika', 'Retika.'],
+			['DarthChinchipokli', 'New sith lord'],
+			['MF', 'R2D2'],
+			['ODaddy', 'How did Kota neighbor call his father?'],
+			['SecondPiece', 'Crush of entire 8th F.'],
+			['Chaurasiya', 'Best kachori'],
+			['Ambay', 'Best patties'],
+			['Dilbaag', 'Pet name of your second father in school.'],
+			['Sith', 'Language forbidden to translate for 3PO'],
+			['FN2187', 'Full name of Fin'],
 		];
 		crosswordPuzzle(puzzlewords);
+		$("#close_modal").on("click",function(){
+			$("#party_modal").hide();
+		});
+		$("#close_c_modal").on("click",function(){
+			$("#completed_modal").hide();
+		});
 	});
-
 </script>
 
 <body>
-<div class="main_block" style="opacity: 0.9;">
-	<div class="py-5" >
+<div class="main_block" >
+	<div class="py-5" style="background-color: rgba(0,0,0,0.6);height: 100%;">
 		<div class="row m-0">
 			<div id="root" class="col-md-6 root d-flex justify-content-center">
 			</div>
 			<div id="lists" class="lists col-md-4 offset-md-1">
-				<div class="d-flex justify-content-around">
-						<div id="left-list" valign="top" class="list-text col-md-6">
-							<h1>Across</h1>
+				<div class="d-flex flex-column justify-content-around">
+						<div id="left-list" valign="top" class="list-text col-md-12">
+							<h2>ACROSS</h2>
 						</div>
-						<div id="right-list" valign="top" class="list-text col-md-6">
-							<h1>Down</h1>
+						<div id="right-list" valign="top" class="list-text col-md-12">
+							<h2>DOWN</h2>
 						</div>
 				</div>
 			</div>
 		</div>
+		<p class="text-light pt-5 px-5">*Please omit spaces in answers.</p>
 	</div>
 	<div id="answer-form">
 
@@ -71,14 +78,37 @@
 			
 			<p id="answer-results" class="hidden"></p>
 			
-			<p>
+			<div class="text-right">
 				<input type="button" class="btn btn-danger" id="cancel-button" value="Cancel">
 				<input type="button" class="btn btn-success" id="answer-button" value="Check">
-			</p>
+			</div>
 		</div>
-
+		
 	</div>
 </div>
+
+<div id="party_modal" class="modal full_modal w-100">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-body p-3">
+    		<button type="button" class="close text-right" data-dismiss="modal" id="close_modal" aria-hidden="true">&times;</button>
+    		<h1 class="text-center">Correct!!</h1>
+    		<img src="/static/images/happy1.gif" class="img-fluid w-100">
+    	</div>
+    </div>
+   </div>
+</div>
+<div id="completed_modal" class="modal full_modal w-100">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-body p-3">
+    		<button type="button" class="close text-right" data-dismiss="modal" id="close_c_modal" aria-hidden="true">&times;</button>
+    		<img src="/static/images/happy.gif" class="img-fluid w-100">
+    	</div>
+    </div>
+   </div>
+</div>
+
 </body>
 
 </html>

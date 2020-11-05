@@ -17,7 +17,7 @@ var crosswordclues = [];
 
 function areWeInGodMode() {
 	return false;
-	return true;
+	// return true;
 }
 
 	/* areWeRandomizingPuzzleWords()
@@ -27,7 +27,8 @@ function areWeInGodMode() {
 	*/
 
 function areWeRandomizingPuzzleWords() {
-	return true;
+	return false;
+	// return true;
 }
 
 	/* areWeRandomizingPuzzlePieces
@@ -37,7 +38,8 @@ function areWeRandomizingPuzzleWords() {
 	*/
 
 function areWeRandomizingPuzzlePieces() {
-	return true;
+	return false;
+	// return true;
 }
 
 	/* areWeRandomizingAcrossDownChoices()
@@ -47,7 +49,8 @@ function areWeRandomizingPuzzlePieces() {
 	*/
 
 function areWeRandomizingAcrossDownChoices() {
-	return true;
+	return false;
+	// return true;
 }
 
 	/* areWeRandomizingAcrossDownLists()
@@ -57,7 +60,8 @@ function areWeRandomizingAcrossDownChoices() {
 	*/
 
 function areWeRandomizingAcrossDownLists() {
-	return true;
+	return false;
+	// return true;
 }
 
 			// Main()
@@ -68,12 +72,12 @@ function areWeRandomizingAcrossDownLists() {
 		Main function that receives the list of puzzlewords and then displays the crossword puzzle itself.
 	
 	*/
-
+window.solved=0;
 function crosswordPuzzle(puzzlewords) {
 	var wordcount = puzzlewords.length;
 	
 	if(!puzzlewords || !wordcount) {
-		console.log("Developer Error : Did you forget to load words?");
+		// console.log("Developer Error : Did you forget to load words?");
 		return false;
 	}
 	
@@ -94,7 +98,7 @@ function crosswordPuzzle(puzzlewords) {
 	}
 	
 	if(!graphs || !graphs.length) {
-		console.log("Developer Error : Your words could not be made into graphs.");
+		// console.log("Developer Error : Your words could not be made into graphs.");
 		return false;
 	}
 	
@@ -125,13 +129,15 @@ function showCrossWordOptions() {
 		*/
 		
 	var solvefunction = function() {
+		var id=$(this).attr('id').split('_')[1];
+		// console.log(id);
 		$('#solution-answer').val('');
 		$('#answer-results').hide();
 		$('#answer-results').html('');
 		
 		var word = $(this).attr('data-word');
 		var acrosstext = $(this).attr('data-across') == 'false' ? 'Down' : 'Across';
-		$('#position-and-clue').html('<b>' + acrosstext + '</b> : ' + $(this).attr('data-clue'));
+		$('#position-and-clue').html('<b>' + acrosstext+" "+ id + '</b> : ' + $(this).attr('data-clue'));
 		$('#answer-form').show();
 		
 		if($(this).children('span').attr('data-solved')) {
@@ -204,13 +210,13 @@ function showCrossWordOptions() {
 				for(var i = 0; i < answer.length; i++) {
 					var newheight = y + i ;
 					var letterposition = 'letter-position-' + x + '-' + newheight;
-					$('#' + letterposition).text(answer[i]);
+					$('#' + letterposition).text(answer[i].toUpperCase());
 				}
 			} else {
 				for(var i = 0; i < answer.length; i++) {
 					var newwidth = x + i ;
 					var letterposition = 'letter-position-' + newwidth + '-' + y;
-					$('#' + letterposition).text(answer[i]);
+					$('#' + letterposition).text(answer[i].toUpperCase());
 				}
 			}
 			
@@ -218,6 +224,13 @@ function showCrossWordOptions() {
 			$('#' + word + '-listing').attr('data-solved', true);
 			
 			$('#answer-form').hide();
+			window.solved+=1;
+			var gif="/static/images/happy"+window.solved+".gif";
+			$("#party_modal").find("img").attr("src",gif);
+			$("#party_modal").show();
+			setTimeout(function() {
+				$("#party_modal").hide();
+			}, 1500);
 		} else {
 			if(!$('#answer-results').is(':visible')) {
 				$('#answer-results').show();
@@ -230,7 +243,7 @@ function showCrossWordOptions() {
 
 	var completedcrossword = function() {
 		var words = $(".word-clue");
-		console.log(words);
+		// console.log(words);
 		var completedcount=0;
 		for(var t=0;t<words.length;t++){
 			if ($(words[t]).children('span').attr('data-solved')){
@@ -238,9 +251,10 @@ function showCrossWordOptions() {
 			}
 		}
 		if (words.length==completedcount){
-			console.log("completed");
+			// console.log("completed");
+			$("#completed_modal").show();
 		} else{
-			console.log("incomplete");
+			// console.log("incomplete");
 		}
 	}
 		/* revealanswerfunction()
@@ -251,7 +265,7 @@ function showCrossWordOptions() {
 	
 	var revealanswerfunction = function() {
 		var words = $(".word-clue");
-		console.log(words);
+		// console.log(words);
 		for(var t=0;t<words.length;t++){
 			// console.log($(words[t]).children('span'),$(words[t]).children('span').attr('data-solved'));
 			if ($(words[t]).children('span').attr('data-solved')){
@@ -261,7 +275,7 @@ function showCrossWordOptions() {
 				var across =$(words[t]).attr('data-across');
 				var x = parseInt($(words[t]).attr('data-x'), 10);
 				var y = parseInt($(words[t]).attr('data-y'), 10);
-				console.log(word,across,x,y);
+				// console.log(word,across,x,y);
 				if(across && across != 'false') {
 					for(var i = 0; i < word.length; i++) {
 						var newheight = y + i ;
@@ -337,7 +351,7 @@ function getViewableCrossWordList(listitems, clues, across) {
 		var coordinates = wordinfo['coordinates'];
 		var clue = clues[word];
 		
-		element += '<li ';
+		element += '<li id="clue_'+number+ '" ';
 		element += 'data-word="' + word.replace(/"/g, '&quot;') + '" ';
 		element += 'data-clue="' + clue.replace(/"/g, '&quot;') + '" ';
 		element += 'data-x="' + coordinates[0] + '" ';
@@ -383,7 +397,7 @@ function fillInCrossWordNumbers(listitems, blockitems, blockitemsordered) {
 			fillnumber = blockingitemnumber;
 		}
 		
-		var element = '<div class="background-text"><span class="crossword-grid-cell-number">' + fillnumber + '</span></div>';
+		var element = '<div class="background-text pl-1 pt-1"><span class="crossword-grid-cell-number">' + fillnumber + '</span></div>';
 		
 		var parentelement;
 		
@@ -587,8 +601,8 @@ function buildCrosswordBlockGraphs(graphs) {
 		var across = graph['across'];
 		var word = graph['word'];
 		
-		console.log("BT: BUILD BLOCK GRAPH...|" + i + "|" + word + "|");
-		console.info(matrixpositions);
+		// console.log("BT: BUILD BLOCK GRAPH...|" + i + "|" + word + "|");
+		// console.info(matrixpositions);
 		
 		var widestline = getWidestLine(fullmatrix);
 		var tallestline = getTallestLine(fullmatrix);
@@ -616,7 +630,7 @@ function buildCrosswordBlockGraphs(graphs) {
 						var leftpushback = 1;
 						
 						while(canmutate && (trimmedfullmatrixline.length - leftpushback) >= 0) {
-							console.log("BT: Across ALPHA.");
+							// console.log("BT: Across ALPHA.");
 							solutioncoordinates = [trimmedfullmatrixline.length - leftpushback,j + i];
 							var newestpossiblefullmatrixsolution = joinHorizontalMatrices(fullmatrix, matrix, solutioncoordinates);
 							if(newestpossiblefullmatrixsolution) {
@@ -680,7 +694,7 @@ function buildCrosswordBlockGraphs(graphs) {
 		}
 		
 		if(buildvertically || !built) {
-				console.log("BT: Vertical ALPHA.");
+				// console.log("BT: Vertical ALPHA.");
 						// AND I AM TWIG!!!
 			var oldlength = fullmatrix.length;
 			fullmatrixbottom = fullmatrix[fullmatrix.length - 1];
@@ -758,7 +772,7 @@ function interpolateMatrixPositions(matrixpositions, coordinates, word) {
 	*/
 
 function viewPuzzle(puzzle) {
-	console.log("Viewing puzzle from...|" + arguments.callee.caller.name + "|");
+	// console.log("Viewing puzzle from...|" + arguments.callee.caller.name + "|");
 	console.info(JSON.stringify(puzzle).replace(/,/g, ",\n"));
 }
 
